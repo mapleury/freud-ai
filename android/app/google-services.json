@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "302338549188",
+    "project_id": "freud-app-9ea9f",
+    "storage_bucket": "freud-app-9ea9f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302338549188:android:3cb1d13e2511179d523091",
+        "android_client_info": {
+          "package_name": "com.example.final_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfJREiVLg8ZhGLaC5N13fGFEwT1Qg_sn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302338549188:android:675fd54246a9b7ff523091",
+        "android_client_info": {
+          "package_name": "com.example.freud_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfJREiVLg8ZhGLaC5N13fGFEwT1Qg_sn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
