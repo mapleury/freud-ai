@@ -6,14 +6,20 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  User? currentUser() => _auth.currentUser;
+  /// Current logged-in user (nullable)
+  User? get currentUser => _auth.currentUser;
 
+  /// Stream for auth state changes
+  Stream<User?> get userStream => _auth.authStateChanges();
+
+  /// Check if the user is using the app for the first time
   Future<bool> isFirstTimeUser(String uid) async {
     final doc = await _db.collection('users').doc(uid).get();
     if (!doc.exists) return true;
     return doc.data()?['completedAssessment'] != true;
   }
 
+  /// Create user document in Firestore
   Future<void> createUserDoc(String uid, String email) async {
     await _db.collection('users').doc(uid).set({
       'email': email,
@@ -22,13 +28,14 @@ class AuthService {
     }, SetOptions(merge: true));
   }
 
+  /// Mark assessment as completed
   Future<void> markAssessmentDone(String uid) async {
     await _db.collection('users').doc(uid).set({
       'completedAssessment': true,
     }, SetOptions(merge: true));
   }
 
-  // SIGN UP
+  /// Sign up user with email & password
   Future<User?> signUp(String email, String password) async {
     final cred = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -36,32 +43,24 @@ class AuthService {
     );
 
     await createUserDoc(cred.user!.uid, email);
-
     return cred.user;
   }
 
-  // SIGN IN
+  /// Sign in user with email & password
   Future<User?> signIn(String email, String password) async {
     final cred = await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    // Ensure doc exists even if old user
+    // Ensure user doc exists even for old users
     await createUserDoc(cred.user!.uid, email);
-
     return cred.user;
   }
 
-Future<void> signOutAndGoToLogin(BuildContext context) async {
-  await _auth.signOut();
-
-  Navigator.pushNamedAndRemoveUntil(
-    context,
-    '/login',
-    (route) => false,
-  );
-}
-
-  Stream<User?> get userStream => _auth.authStateChanges();
+  /// Sign out and navigate to login
+  Future<void> signOutAndGoToLogin(BuildContext context) async {
+    await _auth.signOut();
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+  }
 }

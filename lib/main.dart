@@ -1,8 +1,19 @@
 import 'package:final_project/assesment/assesment_step1.dart';
 import 'package:final_project/assesment/assesment_step2.dart';
+import 'package:final_project/assessment/question1_goal.dart';
+import 'package:final_project/assessment/question2_gender.dart';
+import 'package:final_project/assessment/question3_age.dart';
+import 'package:final_project/assessment/question4_mood.dart';
+import 'package:final_project/assessment/question5_pain.dart';
+import 'package:final_project/assessment/question6_meds.dart';
+import 'package:final_project/assessment/question7_stress.dart';
 import 'package:final_project/home/home_screen.dart';
-import 'package:final_project/journal/create_journal_screen.dart';
+import 'package:final_project/mindful-hours/breath_screen.dart';
+import 'package:final_project/mindful-hours/mindful_screen.dart';
+import 'package:final_project/splash/loading_screen.dart';
+import 'package:final_project/splash/splash_screen.dart';
 import 'package:final_project/stress/stress_level_page.dart';
+import 'package:final_project/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -24,9 +35,7 @@ import 'auth/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(MyApp());
 }
@@ -38,26 +47,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Your App',
+      title: 'Freud App',
+      theme: ThemeData(
+        fontFamily: 'Urbanist', 
+        primarySwatch: Colors.brown,
+      ),
       initialRoute: '/',
       routes: {
-        '/': (context) => RootRouter(), // decides where to send user
-        '/login': (context) => LoginPage(),
-        '/signup': (context) => SignUpPage(),
-
-        // Assessment flow
+        '/': (context) => SplashScreen(),
+        '/loading': (context) => LoadingScreen(),
+        '/login': (context) => SignInScreens(),
+        '/signup': (context) => SignUpScreen(),
+        '/welcome': (context) => WelcomeScreen(),
         '/assessment-step1': (context) => AssessmentStep1(),
         '/assessment-step2': (context) => AssessmentStep2(),
-
-        // Home
         '/home': (context) => HomePage(),
-
-        // Module pages
         '/articles': (context) => ArticlesPage(),
         '/mood': (context) => MoodHistoryPage(),
         '/journal': (context) => JournalScreen(),
         '/stress': (context) => StressLevelPage(),
         '/chatbot': (context) => ChatScreen(),
+        '/q1': (context) => Question1Goal(),
+        '/q2': (context) => Question2Gender(),
+        '/q3': (context) => Question3Age(),
+        '/q4': (context) => Question4Mood(),
+        '/q5': (context) => Question5Physical(),
+        '/q6': (context) => Question6Medication(),
+        '/breath': (context) => BreatheScreen(),
+        '/mindfulhour': (context) => MindfulHoursScreen(),
+        '/q7': (context) => Question7Stress(physicalDistress: false),
       },
     );
   }
@@ -84,7 +102,7 @@ class RootRouter extends StatelessWidget {
         final user = snapshot.data;
 
         if (user == null) {
-          return LoginPage();
+          return SignInScreens();
         }
 
         // CEK FIRESTORE: SUDAH SELESAI ASSESSMENT ATAU BELUM?
@@ -92,9 +110,7 @@ class RootRouter extends StatelessWidget {
           future: auth.isFirstTimeUser(user.uid),
           builder: (context, snap) {
             if (!snap.hasData) {
-              return Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
             }
 
             final firstTime = snap.data!;

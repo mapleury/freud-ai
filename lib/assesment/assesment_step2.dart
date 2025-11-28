@@ -44,22 +44,23 @@ class _AssessmentStep2State extends State<AssessmentStep2> {
   }
 
   Future<void> _goResult() async {
-    final user = _auth.currentUser();
+  final user = _auth.currentUser; 
 
-    if (user != null) {
-      await _auth.markAssessmentDone(user.uid);
-    }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => AssessmentResult(
-          physicalDistress: widget.physicalDistress ?? false,
-          stressLevel: _selected,
-        ),
-      ),
-    );
+  if (user != null) {
+    await _auth.markAssessmentDone(user.uid);
   }
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => AssessmentResult(
+        physicalDistress: widget.physicalDistress ?? false,
+        stressLevel: _selected,
+      ),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
