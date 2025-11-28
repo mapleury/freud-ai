@@ -1,4 +1,4 @@
-# final_project
+# freud.ai App
 
 A new Flutter project.
 
