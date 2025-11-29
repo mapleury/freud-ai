@@ -1,5 +1,4 @@
-import 'package:final_project/assesment/assesment_step1.dart';
-import 'package:final_project/assesment/assesment_step2.dart';
+
 import 'package:final_project/assessment/question1_goal.dart';
 import 'package:final_project/assessment/question2_gender.dart';
 import 'package:final_project/assessment/question3_age.dart';
@@ -59,9 +58,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => SignInScreens(),
         '/signup': (context) => SignUpScreen(),
         '/welcome': (context) => WelcomeScreen(),
-        '/assessment-step1': (context) => AssessmentStep1(),
-        '/assessment-step2': (context) => AssessmentStep2(),
-        '/home': (context) => HomePage(),
+        '/home': (context) => HomeScreen(),
         '/articles': (context) => ArticlesPage(),
         '/mood': (context) => MoodHistoryPage(),
         '/journal': (context) => JournalScreen(),
@@ -116,10 +113,10 @@ class RootRouter extends StatelessWidget {
             final firstTime = snap.data!;
 
             if (firstTime) {
-              return AssessmentStep1();
+              return Question1Goal();
             }
 
-            return HomePage();
+            return HomeScreen();
           },
         );
       },

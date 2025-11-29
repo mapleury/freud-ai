@@ -5,7 +5,6 @@ import 'package:final_project/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/auth/auth_service.dart';
 import 'package:final_project/auth/login_page.dart';
-import 'package:final_project/assesment/assesment_step1.dart';
 import 'package:final_project/home/home_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -60,10 +59,10 @@ class _LoadingScreenState extends State<LoadingScreen>
     Widget nextPage;
 
     if (user == null) {
-      nextPage =  Question1Goal();
+      nextPage =  WelcomeScreen();
     } else {
       final firstTime = await _auth.isFirstTimeUser(user.uid);
-      nextPage = firstTime ? Question1Goal() : HomePage();
+      nextPage = firstTime ? WelcomeScreen() : HomeScreen();
     }
 
     Navigator.pushReplacement(

@@ -39,4 +39,6 @@ class AssessmentModel {
       'stress': stressLevelAnswer,
     };
   }
+
+  static Future<AssessmentModel?> fromMap(Map<String, dynamic> data) async {}
 }

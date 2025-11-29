@@ -1,23 +1,44 @@
-// lib/pages/mood/add_mood_page.dart
-import 'package:final_project/mood-tracker/mood_service.dart';
 import 'package:flutter/material.dart';
+import 'package:final_project/mood-tracker/mood_service.dart';
 
-class AddMoodPage extends StatefulWidget {
+class MoodFlowScreen extends StatefulWidget {
   final DateTime date;
 
-  const AddMoodPage({super.key, required this.date});
+  const MoodFlowScreen({super.key, required this.date});
 
   @override
-  State<AddMoodPage> createState() => _AddMoodPageState();
+  State<MoodFlowScreen> createState() => _MoodFlowScreenState();
 }
 
-class _AddMoodPageState extends State<AddMoodPage> {
+class _MoodFlowScreenState extends State<MoodFlowScreen> {
   final MoodService _moodService = MoodService();
-  final PageController _pc = PageController();
-  int _index = 0;
+  final PageController _controller = PageController();
 
-  // Replace with your desired emojis or images later
-  final List<String> _emojis = ['😃', '🙂', '😐', '😕', '😞', '😡', '😴'];
+  int currentPage = 0;
+
+  final List<Color> moodColors = [
+    Color(0xFFA694F5),
+    Color(0xFFED7E1C),
+    Color(0xFF926247),
+    Color(0xFFFFCE5C),
+    Color(0xFF9BB167),
+  ];
+
+  final List<String> moodImages = [
+    'assets/images/mood1.png',
+    'assets/images/mood2.png',
+    'assets/images/mood3.png',
+    'assets/images/mood4.png',
+    'assets/images/mood5.png',
+  ];
+
+  final List<String> moodNames = [
+    "Happy",
+    "Excited",
+    "Calm",
+    "Bored",
+    "Relaxed",
+  ];
 
   @override
   void initState() {
@@ -28,89 +49,164 @@ class _AddMoodPageState extends State<AddMoodPage> {
   Future<void> _loadExisting() async {
     final existing = await _moodService.getMoodForDate(widget.date);
     if (existing != null) {
-      final idx = _emojis.indexOf(existing);
+      final idx = moodNames.indexOf(existing);
       if (idx >= 0) {
-        setState(() => _index = idx);
-        _pc.jumpToPage(idx);
+        setState(() => currentPage = idx);
+        _controller.jumpToPage(idx);
       }
     }
   }
 
-  Future<void> _setMood() async {
-    final emoji = _emojis[_index];
-    await _moodService.setMood(date: widget.date, emoji: emoji);
-    // return the emoji so caller knows to refresh
-    if (mounted) Navigator.of(context).pop(emoji);
-  }
-
-  @override
-  void dispose() {
-    _pc.dispose();
-    super.dispose();
+  Future<void> _saveMood() async {
+    final mood = moodNames[currentPage];
+    await _moodService.setMood(date: widget.date, emoji: mood);
+    if (mounted) Navigator.pop(context, mood);
   }
 
   String _niceDate(DateTime d) =>
       '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
+  void nextPage() {
+    if (currentPage < 4) {
+      _controller.nextPage(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final displayDate = _niceDate(widget.date);
+
     return Scaffold(
-      appBar: AppBar(title: Text('Set Mood — $displayDate')),
-      body: Column(
+      backgroundColor: moodColors[currentPage],
+      body: Stack(
         children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pc,
-              itemCount: _emojis.length,
-              onPageChanged: (p) => setState(() => _index = p),
-              itemBuilder: (context, i) {
-                final emoji = _emojis[i];
-                return Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    color: Colors.grey.shade100,
+          // HEADER
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.arrow_back, color: Colors.white),
+                    ),
                   ),
-                  child: Text(emoji, style: const TextStyle(fontSize: 120)),
-                );
-              },
+                  const SizedBox(width: 12),
+                  Text(
+                    "Set Mood – $displayDate",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int i = 0; i < _emojis.length; i++)
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: _index == i ? 12 : 8,
-                        height: _index == i ? 12 : 8,
+
+          // PAGEVIEW (UI kamu tetap)
+          PageView.builder(
+            controller: _controller,
+            itemCount: 5,
+            onPageChanged: (i) => setState(() => currentPage = i),
+            itemBuilder: (context, index) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    moodImages[index],
+                    width: 260,
+                    height: 260,
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    moodNames[index],
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  if (index < 4)
+                    ElevatedButton(
+                      onPressed: nextPage,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black87,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 14),
+                      ),
+                      child: const Text("Next"),
+                    ),
+                ],
+              );
+            },
+          ),
+
+          // BOTTOM: dots + SAVE + CANCEL
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+              decoration:
+                  BoxDecoration(color: Colors.white.withOpacity(0.25)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      moodNames.length,
+                      (i) => AnimatedContainer(
+                        duration: Duration(milliseconds: 250),
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        width: currentPage == i ? 12 : 8,
+                        height: currentPage == i ? 12 : 8,
                         decoration: BoxDecoration(
-                          color: _index == i ? Colors.deepPurple : Colors.grey,
+                          color:
+                              currentPage == i ? Colors.white : Colors.white70,
                           shape: BoxShape.circle,
                         ),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _setMood,
-                    child: const Text('Set mood'),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _saveMood,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black87,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                      ),
+                      child: const Text("Save mood"),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

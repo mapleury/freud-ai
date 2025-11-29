@@ -49,7 +49,7 @@ class _CalendarMoodPageState extends State<CalendarMoodPage> {
   Future<void> _openAddPage(DateTime date) async {
     final result = await Navigator.push<String?>(
       context,
-      MaterialPageRoute(builder: (_) => AddMoodPage(date: date)),
+      MaterialPageRoute(builder: (_) => MoodFlowScreen(date: date)),
     );
 
     // if result non-null, refresh

@@ -51,7 +51,7 @@ class _Question1GoalState extends State<Question1Goal> {
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Text(
-                      "1 of 8",
+                      "1 of 7",
                       style: TextStyle(
                         fontSize: 14,
                         color: Color(0xFF4B2E23),

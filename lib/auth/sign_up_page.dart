@@ -3,7 +3,6 @@ import 'package:final_project/themes/app_colors.dart';
 import 'package:final_project/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/auth/auth_service.dart';
-import 'package:final_project/assesment/assesment_step1.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

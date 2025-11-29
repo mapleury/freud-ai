@@ -7,115 +7,128 @@ class Question3Age extends StatefulWidget {
 }
 
 class _Question3AgeState extends State<Question3Age> {
-  FixedExtentScrollController controller =
-      FixedExtentScrollController(initialItem: 2); // Start at 18 (index 2: 16+2=18)
+  final int minAge = 11;
+  final int maxAge = 70;
 
-  int selectedAge = 18;
+  late final FixedExtentScrollController controller;
+
+  int selectedAge = 20;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = FixedExtentScrollController(
+      initialItem: selectedAge - minAge, 
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Light gray background to match the screenshot
+      backgroundColor: Color(0xFFF7F4F2),
       body: SafeArea(
         child: Column(
           children: [
-            // Custom header with only back arrow
+            SizedBox(height: 30),
+
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
+              padding: EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Assessment",
+                    style: TextStyle(
+                      fontFamily: "Urbanist",
+                      color: Color(0xFF4B2E23),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.brown),
-                    onPressed: () => Navigator.pop(context),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDEAE6),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Text(
+                      "3 of 7",
+                      style: TextStyle(
+                        fontFamily: "Urbanist",
+                        fontSize: 14,
+                        color: Color(0xFF4B2E23),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-            // Question text
+
+            SizedBox(height: 40),
+
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: const Text(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
                 "What’s your age?",
                 style: TextStyle(
-                  fontSize: 24,
+                  fontFamily: "Urbanist",
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.brown,
+                  color: Color(0xFF4B2E23),
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            const Spacer(), // Push the wheel to the center
-            // Scrollable Age Picker (Wheel) - Centered vertically
+
+            Spacer(),
+
             SizedBox(
-              height: 250, // Slightly taller for better centering and interaction
+              height: 300,
               child: ListWheelScrollView.useDelegate(
                 controller: controller,
-                itemExtent: 70, // Larger items for better interactivity
-                physics: const FixedExtentScrollPhysics(),
+                itemExtent: 70,
+                physics: FixedExtentScrollPhysics(),
                 onSelectedItemChanged: (index) {
-                  setState(() {
-                    selectedAge = 16 + index;
-                  });
-                  // Add haptic feedback for more interactivity
+                  final age = minAge + index;
+                  if (age <= maxAge) {
+                    setState(() {
+                      selectedAge = age;
+                    });
+                  }
                   HapticFeedback.selectionClick();
                 },
-                perspective: 0.002, // Slight 3D perspective for interactivity
+                perspective: 0.002,
                 renderChildrenOutsideViewport: false,
                 childDelegate: ListWheelChildBuilderDelegate(
+                  childCount: (maxAge - minAge) + 1,
                   builder: (context, index) {
-                    final age = 16 + index;
-                    if (age > 120) return null; // Extended upper limit to 120 for "no limits" feel
+                    final age = minAge + index;
+                    final bool isSelected = age == selectedAge;
 
-                    final isSelected = age == selectedAge;
-
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      decoration: BoxDecoration(
-                        color: isSelected ? Colors.white : Colors.transparent,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: Colors.brown.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  spreadRadius: 2,
-                                ),
-                              ]
-                            : null,
+                    return AnimatedDefaultTextStyle(
+                      duration: Duration(milliseconds: 250),
+                      style: TextStyle(
+                        fontFamily: "Urbanist",
+                        fontSize: isSelected ? 60 : 35,
+                        color: isSelected
+                            ? Color(0xFF4B2E23)
+                            : Color(0xFF4B2E23).withOpacity(0.35),
+                        fontWeight: isSelected
+                            ? FontWeight.w700
+                            : FontWeight.w400,
                       ),
-                      child: AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 300),
-                        style: TextStyle(
-                          fontSize: isSelected ? 36 : 22,
-                          color: isSelected ? Colors.brown : Colors.grey,
-                          fontWeight:
-                              isSelected ? FontWeight.bold : FontWeight.normal,
-                          shadows: isSelected
-                              ? [
-                                  const Shadow(
-                                    color: Colors.black26,
-                                    offset: Offset(0, 2),
-                                    blurRadius: 4,
-                                  ),
-                                ]
-                              : null,
-                        ),
-                        child: Center(child: Text(age.toString())),
-                      ),
+                      child: Center(child: Text(age.toString())),
                     );
                   },
                 ),
               ),
             ),
-            const Spacer(), // Balance the spacing for centering
-            // Continue button
+
+            Spacer(),
+
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(24.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -124,15 +137,16 @@ class _Question3AgeState extends State<Question3Age> {
                     Navigator.pushNamed(context, "/q4");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.brown,
+                    backgroundColor: Color(0xFF4B2E23),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                     elevation: 0,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Continue →",
                     style: TextStyle(
+                      fontFamily: "Urbanist",
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,

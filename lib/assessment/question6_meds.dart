@@ -19,10 +19,13 @@ class _Question6MedicationState extends State<Question6Medication> {
       onTap: () => setState(() => selected = value),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+        padding: EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: isSelected ? Color(0xFFA8B86E) : Color(0xFFF1F1F1),
+          color: isSelected ? Color(0xFFA8B86E) : Colors.white,
           borderRadius: BorderRadius.circular(28),
+          border: isSelected
+              ? Border.all(color: Color(0xFF4B2E23), width: 2)
+              : Border.all(color: Color(0xFF4B2E23).withOpacity(0.45), width: 1.5),
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -35,8 +38,9 @@ class _Question6MedicationState extends State<Question6Medication> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // pushes text to bottom
           children: [
-            // ICON KECIL DI KIRI ATAS
+            // ICON AT TOP LEFT
             Container(
               width: 38,
               height: 38,
@@ -44,18 +48,16 @@ class _Question6MedicationState extends State<Question6Medication> {
                 color: Colors.white.withOpacity(0.45),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: Colors.brown, size: 22),
+              child: Icon(icon, color: Color(0xFF4B2E23), size: 22),
             ),
 
-            SizedBox(height: 16),
-
-            // TEKS LABEL
+            // LABEL AT BOTTOM LEFT
             Text(
               label,
               style: TextStyle(
                 fontSize: 16,
                 height: 1.3,
-                color: Colors.brown,
+                color: Color(0xFF4B2E23),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -68,101 +70,114 @@ class _Question6MedicationState extends State<Question6Medication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // APPBAR TANPA “9 of 14”
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Container(
-          margin: EdgeInsets.only(left: 16, top: 6, bottom: 6),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.brown, width: 1.4),
-          ),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.brown),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-      ),
-
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 10),
-
-            // TITLE
-            Text(
-              "Are you taking any\nmedications?",
-              style: TextStyle(
-                fontSize: 26,
-                height: 1.3,
-                fontWeight: FontWeight.bold,
-                color: Colors.brown,
-              ),
-            ),
-
-            SizedBox(height: 32),
-
-            // GRID 2 × 2
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                childAspectRatio: 0.92,
+      backgroundColor: Color(0xFFF7F4F2),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              SizedBox(height: 30),
+              // HEADER ROW
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  medOption(
-                    value: "prescribed",
-                    icon: Icons.medical_services_outlined,
-                    label: "Prescribed\nMedications",
+                  Text(
+                    "Assessment",
+                    style: TextStyle(
+                      color: Color(0xFF4B2E23),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                  medOption(
-                    value: "supplements",
-                    icon: Icons.local_hospital_outlined,
-                    label: "Over the Counter\nSupplements",
-                  ),
-                  medOption(
-                    value: "none",
-                    icon: Icons.circle_outlined,
-                    label: "I'm not taking any",
-                  ),
-                  medOption(
-                    value: "skip",
-                    icon: Icons.close,
-                    label: "Prefer not to say",
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEDEAE6),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Text(
+                      "6 of 7",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF4B2E23),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-
-            SizedBox(height: 10),
-
-            // BUTTON CONTINUE
-            Container(
-              width: double.infinity,
-              height: 54,
-              child: ElevatedButton(
-                onPressed: selected == null
-                    ? null
-                    : () => Navigator.pushNamed(context, "/q7"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.brown,
-                  disabledBackgroundColor: Colors.brown.withOpacity(0.3),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
+              SizedBox(height: 40),
+              // TITLE
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Are you taking any\nmedications?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 26,
+                    height: 1.3,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4B2E23),
                   ),
                 ),
-                child: Text(
-                  "Continue  →",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+              SizedBox(height: 32),
+              // GRID 2 × 2
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                  childAspectRatio: 0.92,
+                  children: [
+                    medOption(
+                      value: "prescribed",
+                      icon: Icons.medical_services_outlined,
+                      label: "Prescribed\nMedications",
+                    ),
+                    medOption(
+                      value: "supplements",
+                      icon: Icons.local_hospital_outlined,
+                      label: "Over the Counter\nSupplements",
+                    ),
+                    medOption(
+                      value: "none",
+                      icon: Icons.circle_outlined,
+                      label: "I'm not taking any",
+                    ),
+                    medOption(
+                      value: "skip",
+                      icon: Icons.close,
+                      label: "Prefer not to say",
+                    ),
+                  ],
                 ),
               ),
-            ),
-
-            SizedBox(height: 18),
-          ],
+              SizedBox(height: 10),
+              // BUTTON CONTINUE
+              Container(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton(
+                  onPressed: selected == null
+                      ? null
+                      : () => Navigator.pushNamed(context, "/q7"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF4B2E23),
+                    disabledBackgroundColor: Color(0xFF4B2E23).withOpacity(0.3),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                  ),
+                  child: Text(
+                    "Continue  →",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(height: 18),
+            ],
+          ),
         ),
       ),
     );

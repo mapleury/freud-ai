@@ -33,7 +33,7 @@ class _MoodHistoryPageState extends State<MoodHistoryPage> {
   Future<void> _openAdd() async {
     final res = await Navigator.push<String?>(
       context,
-      MaterialPageRoute(builder: (_) => AddMoodPage(date: DateTime.now())),
+      MaterialPageRoute(builder: (_) => MoodFlowScreen(date: DateTime.now())),
     );
     if (res != null) await _loadHistory();
   }
@@ -77,7 +77,7 @@ class _MoodHistoryPageState extends State<MoodHistoryPage> {
                           final res = await Navigator.push<String?>(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => AddMoodPage(date: d),
+                              builder: (_) => MoodFlowScreen(date: d),
                             ),
                           );
                           if (res != null) await _loadHistory();

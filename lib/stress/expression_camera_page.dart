@@ -27,14 +27,13 @@ class _ExpressionCameraPageState extends State<ExpressionCameraPage> {
   bool _processing = false;
   bool _isDisposed = false;
 
-  // Only ONE result
   bool _emotionSent = false;
-
-  // balanced frame skipping
   int _frameCounter = 0;
 
   final MotionDetector _motionDetector = MotionDetector();
   String? _finalEmotion;
+
+  final Color brown = const Color(0xFF4F3422);
 
   @override
   void initState() {
@@ -57,11 +56,12 @@ class _ExpressionCameraPageState extends State<ExpressionCameraPage> {
       );
 
       await _controller!.initialize();
-
       await _controller!.startImageStream(_onFrameAvailable);
 
       if (mounted) setState(() {});
-    } catch (e) {}
+    } catch (e) {
+      // ignore for now
+    }
   }
 
   void _onFrameAvailable(CameraImage image) async {
@@ -79,7 +79,6 @@ class _ExpressionCameraPageState extends State<ExpressionCameraPage> {
       final int height = image.height;
 
       final motion = _motionDetector.compute(gray, width, height);
-
       final brightness = BrightnessAnalyzer.analyze(gray, width, height);
 
       final String emotion = EmotionEngine.decideEmotion(
@@ -87,17 +86,14 @@ class _ExpressionCameraPageState extends State<ExpressionCameraPage> {
         brightness: brightness,
       );
 
-      // ONLY ONCE
       if (!_emotionSent) {
         _emotionSent = true;
         _finalEmotion = emotion;
 
-        // send to firebase through callback
         if (widget.onEmotionDetected != null) {
           widget.onEmotionDetected!(emotion);
         }
 
-        // stop the camera stream
         try {
           await _controller?.stopImageStream();
         } catch (_) {}
@@ -105,6 +101,7 @@ class _ExpressionCameraPageState extends State<ExpressionCameraPage> {
         if (mounted) setState(() {});
       }
     } catch (_) {
+      // ignore frame errors
     } finally {
       _processing = false;
     }
@@ -121,59 +118,107 @@ class _ExpressionCameraPageState extends State<ExpressionCameraPage> {
   Widget build(BuildContext context) {
     final finalEmotion = _finalEmotion;
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Expression Recording')),
-      body: Column(
-        children: [
-          Expanded(
-            child: _controller == null ||
-                    !_controller!.value.isInitialized ||
-                    finalEmotion != null
-                ? Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: finalEmotion == null
-                          ? const CircularProgressIndicator()
-                          : Text(
-                              'Emotion Captured',
-                              style: const TextStyle(
-                                fontSize: 22,
-                                color: Colors.white,
-                              ),
-                            ),
-                    ),
-                  )
-                : CameraPreview(_controller!),
+    return Padding(
+      padding: EdgeInsetsGeometry.all(16),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFFAFAFA),
+
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFFAFAFA),
+          elevation: 0,
+          title: const Text(
+            'Expression Recording',
+            style: TextStyle(color: Color(0xFF4F3422)),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text(
-                  'Stress level: ${widget.stressLevel}',
-                  style: const TextStyle(fontSize: 16),
+          leading: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Image.asset(
+                  "assets/brown-back-button.png",
+                  width: 40,
+                  height: 40,
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  finalEmotion == null
-                      ? 'Detecting...'
-                      : 'Emotion: $finalEmotion',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  finalEmotion == null
-                      ? 'Hold still for a moment'
-                      : 'Saved successfully',
-                  style: const TextStyle(fontSize: 13),
-                ),
-              ],
+              ),
             ),
           ),
-        ],
+        ),
+
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            children: [
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child:
+                      _controller == null ||
+                          !_controller!.value.isInitialized ||
+                          finalEmotion != null
+                      ? Container(
+                          color: Colors.black,
+                          child: Center(
+                            child: finalEmotion == null
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text(
+                                    'Emotion Captured',
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                          ),
+                        )
+                      : CameraPreview(_controller!),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0ECE9),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Stress level: ${widget.stressLevel}',
+                      style: TextStyle(fontSize: 16, color: brown),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      finalEmotion == null
+                          ? 'Detecting...'
+                          : 'Emotion: $finalEmotion',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: brown,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      finalEmotion == null
+                          ? 'Hold still for a moment'
+                          : 'Saved successfully',
+                      style: TextStyle(fontSize: 13, color: brown),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

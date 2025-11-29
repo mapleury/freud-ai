@@ -1,3 +1,4 @@
+// article.dart
 class Article {
   final String title;
   final String image;
@@ -11,6 +12,7 @@ class Article {
 }
 
 class ArticleService {
+  // Static list of sample articles — immediately initialized, no late, no errors
   static final List<Article> sampleArticles = [
     Article(
       title: "Understanding Your Mental Space",
@@ -43,8 +45,9 @@ class ArticleService {
     ),
   ];
 
+  // Optional: simulate async fetch
   Future<List<Article>> getArticles() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 500));
     return sampleArticles;
   }
 }

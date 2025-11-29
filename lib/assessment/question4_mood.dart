@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class Question4Mood extends StatefulWidget {
   @override
@@ -7,239 +6,152 @@ class Question4Mood extends StatefulWidget {
 }
 
 class _Question4MoodState extends State<Question4Mood> {
-  double moodValue = 0.5; // 0 = sad, 1 = happy
+  double moodValue = 0.5;
 
-  String getMoodText() {
-    if (moodValue < 0.33) return "I feel sad.";
-    else if (moodValue < 0.67) return "I feel neutral.";
-    else return "I feel happy.";
-  }
+  final List<Map<String, dynamic>> moods = [
+    {"label": "Sad", "icon": Icons.sentiment_dissatisfied_outlined},
+    {"label": "Neutral", "icon": Icons.sentiment_neutral_outlined},
+    {"label": "Happy", "icon": Icons.sentiment_satisfied_outlined},
+  ];
 
-  IconData getMoodIcon() {
-    if (moodValue < 0.33) return Icons.sentiment_dissatisfied_outlined;
-    else if (moodValue < 0.67) return Icons.sentiment_neutral_outlined;
-    else return Icons.sentiment_satisfied_outlined;
-  }
-
-  Color getMoodColor() {
-    if (moodValue < 0.33) return Colors.orange;
-    else if (moodValue < 0.67) return const Color(0xFFFFD700);
-    else return Colors.green;
+  int getSelectedMoodIndex() {
+    if (moodValue < 0.33)
+      return 0;
+    else if (moodValue < 0.67)
+      return 1;
+    else
+      return 2;
   }
 
   @override
   Widget build(BuildContext context) {
+    final selectedMoodIndex = getSelectedMoodIndex();
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFF7F4F2),
       body: SafeArea(
         child: Column(
           children: [
-            // Custom header with 'C' back, title, and progress
+            SizedBox(height: 30),
+            // HEADER
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Circular 'C' back button
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'C',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.brown,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  const Expanded(
-                    child: Text(
-                      'Assessment',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.brown,
-                      ),
+                  Text(
+                    "Assessment",
+                    style: TextStyle(
+                      fontFamily: "Urbanist",
+                      color: Color(0xFF4B2E23),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     decoration: BoxDecoration(
-                      color: Colors.brown.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      color: Color(0xFFEDEAE6),
+                      borderRadius: BorderRadius.circular(100),
                     ),
-                    child: const Text(
-                      '1 of 8',
+                    child: Text(
+                      "4 of 7",
                       style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.brown,
-                        fontWeight: FontWeight.w500,
+                        fontFamily: "Urbanist",
+                        fontSize: 14,
+                        color: Color(0xFF4B2E23),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            // Question text
+
+            SizedBox(height: 40),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: const Text(
-                "How would you describe your mood?",
+              child: Text(
+                "How do you feel today?",
                 style: TextStyle(
-                  fontSize: 24,
+                  fontFamily: "Urbanist",
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.brown,
+                  color: Color(0xFF4B2E23),
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            const Spacer(),
-            // Selected mood display
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                children: [
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: Text(
-                      getMoodText(),
-                      key: ValueKey(moodValue),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF8D6E63),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: Icon(
-                      getMoodIcon(),
-                      key: ValueKey(moodValue),
-                      size: 80,
-                      color: getMoodColor(),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Icon(
-                    Icons.keyboard_arrow_up,
-                    size: 20,
-                    color: Colors.grey[400],
-                  ),
-                ],
+
+            SizedBox(height: 60),
+
+            // ICON BESAR DIATAS
+            Icon(
+              moods[selectedMoodIndex]["icon"],
+              size: 80,
+              color: Color(0xFF4B2E23), // semua icon jadi brown
+            ),
+            SizedBox(height: 20),
+            Text(
+              moods[selectedMoodIndex]["label"],
+              style: TextStyle(
+                fontFamily: "Urbanist",
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF4B2E23),
               ),
             ),
-            const SizedBox(height: 20),
-            // Mood gauge
-            SizedBox(
-              height: 150,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final double centerX = constraints.maxWidth / 2;
-                  final double radius = 60.0;
-                  final double centerY = 70.0;
-                  final double trackWidth = 2 * radius;
-                  final double leftX = centerX - radius;
-                  final double knobLeft = leftX + moodValue * trackWidth - 10;
-                  final double baselineY = centerY;
-                  return GestureDetector(
-                    onPanUpdate: (details) {
-                      final double newValue = ((details.localPosition.dx - leftX) / trackWidth).clamp(0.0, 1.0);
-                      setState(() => moodValue = newValue);
-                    },
-                    child: Stack(
-                      children: [
-                        CustomPaint(
-                          size: Size(constraints.maxWidth, 150),
-                          painter: MoodGaugePainter(centerX: centerX, centerY: centerY, radius: radius),
-                        ),
-                        // Sad small face
-                        Positioned(
-                          left: centerX - radius + 10,
-                          top: baselineY - 30,
-                          child: Icon(
-                            Icons.sentiment_dissatisfied_outlined,
-                            size: 28,
-                            color: Colors.orange,
-                          ),
-                        ),
-                        // Neutral small face
-                        Positioned(
-                          left: centerX - 14,
-                          top: baselineY - 35, // Slightly higher to simulate arc position
-                          child: Icon(
-                            Icons.sentiment_neutral_outlined,
-                            size: 28,
-                            color: const Color(0xFFFFD700),
-                          ),
-                        ),
-                        // Happy small face
-                        Positioned(
-                          left: centerX + radius - 14,
-                          top: baselineY - 30,
-                          child: Icon(
-                            Icons.sentiment_satisfied_outlined,
-                            size: 28,
-                            color: Colors.green,
-                          ),
-                        ),
-                        // Pointer knob
-                        Positioned(
-                          left: knobLeft,
-                          top: baselineY - 10,
-                          child: Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Colors.brown,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+
+            SizedBox(height: 40),
+
+            // LINEAR SLIDER
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  activeTrackColor: Colors.brown,
+                  inactiveTrackColor: Colors.brown.withOpacity(0.3),
+                  thumbColor: Colors.brown,
+                  overlayColor: Colors.brown.withOpacity(0.2),
+                  trackHeight: 8,
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                ),
+                child: Slider(
+                  value: moodValue,
+                  min: 0.0,
+                  max: 1.0,
+                  divisions: 100,
+                  onChanged: (value) {
+                    setState(() {
+                      moodValue = value;
+                    });
+                  },
+                ),
               ),
             ),
-            const SizedBox(height: 40),
-            // Continue button
+
+            Spacer(),
+
+            // CONTINUE BUTTON
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(24.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pushNamed(context, "/q5"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.brown,
+                    backgroundColor: Color(0xFF4B2E23),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                     elevation: 0,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Continue →",
                     style: TextStyle(
+                      fontFamily: "Urbanist",
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
@@ -253,69 +165,4 @@ class _Question4MoodState extends State<Question4Mood> {
       ),
     );
   }
-}
-
-class MoodGaugePainter extends CustomPainter {
-  final double centerX;
-  final double centerY;
-  final double radius;
-
-  MoodGaugePainter({
-    required this.centerX,
-    required this.centerY,
-    required this.radius,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double sweepPerSegment = math.pi / 3;
-
-    final Paint sadPaint = Paint()
-      ..color = Colors.orange
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 20.0
-      ..strokeCap = StrokeCap.round;
-
-    final Paint neutralPaint = Paint()
-      ..color = const Color(0xFFFFD700)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 20.0
-      ..strokeCap = StrokeCap.round;
-
-    final Paint happyPaint = Paint()
-      ..color = Colors.green
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 20.0
-      ..strokeCap = StrokeCap.round;
-
-    // Sad arc: start at pi, sweep pi/3 clockwise
-    canvas.drawArc(
-      Rect.fromCircle(center: Offset(centerX, centerY), radius: radius),
-      math.pi,
-      sweepPerSegment,
-      false,
-      sadPaint,
-    );
-
-    // Neutral arc
-    canvas.drawArc(
-      Rect.fromCircle(center: Offset(centerX, centerY), radius: radius),
-      math.pi + sweepPerSegment,
-      sweepPerSegment,
-      false,
-      neutralPaint,
-    );
-
-    // Happy arc
-    canvas.drawArc(
-      Rect.fromCircle(center: Offset(centerX, centerY), radius: radius),
-      math.pi + 2 * sweepPerSegment,
-      sweepPerSegment,
-      false,
-      happyPaint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
