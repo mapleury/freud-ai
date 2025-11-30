@@ -1,4 +1,4 @@
-// article.dart
+
 class Article {
   final String title;
   final String image;
@@ -12,7 +12,7 @@ class Article {
 }
 
 class ArticleService {
-  // Static list of sample articles — immediately initialized, no late, no errors
+  // Dummy data article karena API tidak berhasil diakses :(
   static final List<Article> sampleArticles = [
     Article(
       title: "Understanding Your Mental Space",
@@ -45,7 +45,6 @@ class ArticleService {
     ),
   ];
 
-  // Optional: simulate async fetch
   Future<List<Article>> getArticles() async {
     await Future.delayed(Duration(milliseconds: 500));
     return sampleArticles;

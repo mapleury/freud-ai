@@ -25,15 +25,15 @@ class _Question7StressState extends State<Question7Stress> {
     return GestureDetector(
       onTap: () => setState(() => _selected = value),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration:  Duration(milliseconds: 200),
         width: selected ? 55 : 40,
         height: selected ? 55 : 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF4B2E23) : Colors.white,
+          color: selected ?  Color(0xFF4B2E23) : Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: selected ? const Color(0xFF4B2E23) : const Color(0xFF4B2E23).withOpacity(0.45),
+            color: selected ?  Color(0xFF4B2E23) :  Color(0xFF4B2E23).withOpacity(0.45),
             width: selected ? 2 : 1.5,
           ),
           boxShadow: selected
@@ -49,7 +49,7 @@ class _Question7StressState extends State<Question7Stress> {
         child: Text(
           value.toString(),
           style: TextStyle(
-            color: selected ? Colors.white : const Color(0xFF4B2E23),
+            color: selected ? Colors.white :  Color(0xFF4B2E23),
             fontSize: selected ? 18 : 16,
             fontWeight: FontWeight.bold,
           ),
@@ -81,10 +81,10 @@ class _Question7StressState extends State<Question7Stress> {
     const brown = Color(0xFF4B2E23);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F4F2),
+      backgroundColor:  Color(0xFFF7F4F2),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding:  EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
               SizedBox(height: 30),
@@ -135,7 +135,7 @@ class _Question7StressState extends State<Question7Stress> {
 
               SizedBox(height: 60),
 
-              // STRESS LEVEL CHIPS
+              // STRESS LEVEL 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(5, (i) => _levelChip(i + 1)),

@@ -19,7 +19,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     "assets/welcome5.png",
   ];
 
-  // atur posisi garisnya
   double progressBarBottomPadding = 300;
   double progressBarWidth = 140;
   double progressBarHeight = 7;

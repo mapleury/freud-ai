@@ -62,7 +62,7 @@ class _AssessmentResultViewState extends State<AssessmentResultView> {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      return const Scaffold(
+      return  Scaffold(
         body: Center(child: CircularProgressIndicator(color: Colors.green)),
       );
     }
@@ -95,11 +95,11 @@ class _AssessmentResultViewState extends State<AssessmentResultView> {
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
+            padding:  EdgeInsets.symmetric(horizontal: 28),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                 Text(
                   "Your Freud Score",
                   style: TextStyle(
                     color: Colors.white,
@@ -108,14 +108,14 @@ class _AssessmentResultViewState extends State<AssessmentResultView> {
                   ),
                 ),
 
-                const SizedBox(height: 30),
+                 SizedBox(height: 30),
                 CircleScore(score: score, mainColor: scoreColor),
 
-                const SizedBox(height: 30),
+                 SizedBox(height: 30),
                 Text(
                   description,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     color: Colors.white,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -123,31 +123,31 @@ class _AssessmentResultViewState extends State<AssessmentResultView> {
                   ),
                 ),
 
-                const SizedBox(height: 40),
+                 SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                     Icon(
                       Icons.lightbulb_outline,
                       color: Colors.white,
                       size: 18,
                     ),
-                    const SizedBox(width: 6),
+                     SizedBox(width: 6),
                     Text(
                       "$suggestionsCount AI suggestions",
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      style:  TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    const SizedBox(width: 20),
+                     SizedBox(width: 20),
                     Icon(feelingIcon, color: Colors.white, size: 18),
-                    const SizedBox(width: 6),
+                     SizedBox(width: 6),
                     Text(
                       feelingText,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      style:  TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 50),
+                 SizedBox(height: 50),
                 SizedBox(
                   width: double.infinity,
                   child: SwipeableButton(

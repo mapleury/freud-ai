@@ -18,21 +18,24 @@ class MoodPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // bg color
+        // background
         Positioned.fill(child: Container(color: bgColor)),
 
-        // atur ukuran gambar
+        // image
         Align(
           alignment: Alignment(0, -0.3),
           child: SizedBox(
             width: 590,
             height: 590,
-            child: Image.asset(image, fit: BoxFit.contain),
+            child: Image.asset(
+              image,
+              fit: BoxFit.contain,
+            ),
           ),
         ),
 
         Positioned(
-          bottom: 335,
+          bottom: 300, 
           left: 0,
           right: 0,
           child: Center(
@@ -48,7 +51,6 @@ class MoodPage extends StatelessWidget {
           ),
         ),
 
-        // button set mood
         Positioned(
           bottom: 90,
           left: 0,
@@ -68,7 +70,7 @@ class MoodPage extends StatelessWidget {
                   "Set Mood",
                   style: TextStyle(
                     fontSize: 17,
-                    color: const Color(0xFF4B3A2F),
+                    color: Color(0xFF4B3A2F),
                     fontWeight: FontWeight.w600,
                   ),
                 ),

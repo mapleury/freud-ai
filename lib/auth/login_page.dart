@@ -48,7 +48,6 @@ class _SignInScreensState extends State<SignInScreens> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // ---------------- HEADER ----------------
             Stack(
               children: [
                 ClipPath(
@@ -70,9 +69,8 @@ class _SignInScreensState extends State<SignInScreens> {
               ],
             ),
 
-            const SizedBox(height: 20),
+             SizedBox(height: 20),
 
-            // ---------------- TITLE ----------------
             Text(
               'Sign In to Freud.ai',
               style: TextStyle(
@@ -82,16 +80,15 @@ class _SignInScreensState extends State<SignInScreens> {
               ),
             ),
 
-            const SizedBox(height: 30),
+             SizedBox(height: 30),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding:  EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ---------------- EMAIL ----------------
-                  const Text('Email Address'),
-                  const SizedBox(height: 6),
+                   Text('Email Address'),
+                   SizedBox(height: 6),
                   TextField(
                     controller: _emailController,
                     onChanged: (_) {
@@ -102,7 +99,7 @@ class _SignInScreensState extends State<SignInScreens> {
                     decoration: InputDecoration(
                       hintText: 'Enter your email...',
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding:  EdgeInsets.all(12),
                         child: Image.asset('assets/email-logo.png', width: 24),
                       ),
                       filled: true,
@@ -122,8 +119,8 @@ class _SignInScreensState extends State<SignInScreens> {
 
                   if (!_isEmailValid)
                     Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      padding: const EdgeInsets.symmetric(
+                      margin:  EdgeInsets.only(top: 10),
+                      padding:  EdgeInsets.symmetric(
                           vertical: 10, horizontal: 12),
                       decoration: BoxDecoration(
                         color: AppColors.errorInputButtonColor,
@@ -135,7 +132,7 @@ class _SignInScreensState extends State<SignInScreens> {
                       child: Row(
                         children: [
                           Image.asset('assets/warning.png', width: 20),
-                          const SizedBox(width: 8),
+                           SizedBox(width: 8),
                           Text(
                             'Invalid Email Address!',
                             style: TextStyle(
@@ -147,11 +144,10 @@ class _SignInScreensState extends State<SignInScreens> {
                       ),
                     ),
 
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20),
 
-                  // ---------------- PASSWORD ----------------
-                  const Text('Password'),
-                  const SizedBox(height: 6),
+                   Text('Password'),
+                   SizedBox(height: 6),
                   TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
@@ -163,7 +159,7 @@ class _SignInScreensState extends State<SignInScreens> {
                     decoration: InputDecoration(
                       hintText: 'Enter your password...',
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding:  EdgeInsets.all(10),
                         child: Image.asset('assets/lock.png', width: 20),
                       ),
                       suffixIcon: GestureDetector(
@@ -173,7 +169,7 @@ class _SignInScreensState extends State<SignInScreens> {
                           });
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding:  EdgeInsets.all(12),
                           child: Image.asset('assets/eye.png', width: 22),
                         ),
                       ),
@@ -187,7 +183,7 @@ class _SignInScreensState extends State<SignInScreens> {
 
                   if (!_isPasswordValid)
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding:  EdgeInsets.only(top: 10),
                       child: Text(
                         'Password must be at least 6 characters',
                         style: TextStyle(
@@ -197,7 +193,7 @@ class _SignInScreensState extends State<SignInScreens> {
                       ),
                     ),
 
-                  const SizedBox(height: 40),
+                   SizedBox(height: 40),
 
                   SizedBox(
                     width: double.infinity,
@@ -224,18 +220,18 @@ class _SignInScreensState extends State<SignInScreens> {
                         ),
                       ),
                       child: _loading
-                          ? const CircularProgressIndicator(
+                          ?  CircularProgressIndicator(
                               color: Colors.white,
                             )
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
+                                 Text(
                                   "Sign In",
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
-                                const SizedBox(width: 8),
+                                 SizedBox(width: 8),
                                 Image.asset('assets/arrow-right.png',
                                     width: 20, height: 20),
                               ],
@@ -243,33 +239,31 @@ class _SignInScreensState extends State<SignInScreens> {
                     ),
                   ),
 
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25),
 
-                  // ---------------- SOCIAL ICONS ----------------
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _socialIcon("assets/facebook-logo.png"),
-                      const SizedBox(width: 16),
+                       SizedBox(width: 16),
                       _socialIcon("assets/google-logo.png"),
-                      const SizedBox(width: 16),
+                       SizedBox(width: 16),
                       _socialIcon("assets/instagram-logo.png"),
                     ],
                   ),
 
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20),
 
-                  // ---------------- SIGN UP LINK ----------------
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Don’t have an account? '),
+                       Text('Don’t have an account? '),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const SignUpScreen()),
+                                builder: (_) =>  SignUpScreen()),
                           );
                         },
                         child: Text(
@@ -283,7 +277,7 @@ class _SignInScreensState extends State<SignInScreens> {
                     ],
                   ),
 
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20),
 
                   Align(
                     alignment: Alignment.center,
@@ -309,7 +303,7 @@ class _SignInScreensState extends State<SignInScreens> {
 
   Widget _socialIcon(String path) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding:  EdgeInsets.all(12),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: Colors.grey.shade400),

@@ -7,11 +7,9 @@ class MoodService {
 
   String get _uid => FirebaseAuth.instance.currentUser!.uid;
 
-  /// Key format: 'YYYY-MM-DD'
   String _dateKey(DateTime d) =>
       '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-  /// Save mood for a given day (overwrites existing)
   Future<void> setMood({required DateTime date, required String emoji}) async {
     final key = _dateKey(date);
     await _db
@@ -26,7 +24,6 @@ class MoodService {
     });
   }
 
-  /// Get mood emoji for a single date, or null if none
   Future<String?> getMoodForDate(DateTime date) async {
     final key = _dateKey(date);
     final snap = await _db
@@ -40,7 +37,6 @@ class MoodService {
     return data?['emoji'] as String?;
   }
 
-  /// Fetch moods for a list of dates
   Future<Map<String, String>> getMoodsForDates(List<DateTime> dates) async {
     final Map<String, String> out = {};
     for (final d in dates) {
@@ -61,7 +57,6 @@ class MoodService {
     return out;
   }
 
-  /// Fetch all moods ordered by timestamp desc (simple history)
   Future<List<Map<String, dynamic>>> fetchAllMoods({int limit = 200}) async {
     final q = await _db
         .collection('users')

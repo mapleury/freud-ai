@@ -22,7 +22,7 @@ class FirebaseService {
 
 
 
-  // Stream messages with proper timestamp handling
+  // Stream messages dgn timestamp
   Stream<List<MessageModel>> streamMessages() {
     return _firestore
         .collection('chats')

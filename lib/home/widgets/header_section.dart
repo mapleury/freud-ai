@@ -1,3 +1,4 @@
+import 'package:final_project/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -46,7 +47,24 @@ class HeaderSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Image.asset('icons/bell.png', width: 60, height: 60),
+                  GestureDetector(
+                    onTap: () async {
+                      await AuthService().signOutAndGoToLogin(context);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/login',
+                        (route) => false,
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white.withOpacity(0.45), width: 2),
+                      ),
+                      child: Icon(Icons.logout, color: Colors.white.withOpacity(0.45), size: 20,)
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 8),

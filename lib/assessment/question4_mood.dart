@@ -71,7 +71,7 @@ class _Question4MoodState extends State<Question4Mood> {
             SizedBox(height: 40),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding:  EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
                 "How do you feel today?",
                 style: TextStyle(
@@ -86,11 +86,10 @@ class _Question4MoodState extends State<Question4Mood> {
 
             SizedBox(height: 60),
 
-            // ICON BESAR DIATAS
             Icon(
               moods[selectedMoodIndex]["icon"],
               size: 80,
-              color: Color(0xFF4B2E23), // semua icon jadi brown
+              color: Color(0xFF4B2E23), 
             ),
             SizedBox(height: 20),
             Text(
@@ -107,7 +106,7 @@ class _Question4MoodState extends State<Question4Mood> {
 
             // LINEAR SLIDER
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding:  EdgeInsets.symmetric(horizontal: 32.0),
               child: SliderTheme(
                 data: SliderTheme.of(context).copyWith(
                   activeTrackColor: Colors.brown,

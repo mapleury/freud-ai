@@ -1,10 +1,14 @@
+import 'package:final_project/chatbot/add_chat.dart';
+import 'package:final_project/chatbot/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class FloatingButtonOnImage extends StatelessWidget {
   final String image;
 
   const FloatingButtonOnImage({
-    super.key, required this.image, required Null Function() onPressed
+    super.key,
+    required this.image,
+    required Null Function() onPressed,
   });
 
   @override
@@ -32,7 +36,14 @@ class FloatingButtonOnImage extends StatelessWidget {
               _circleBtn(
                 icon: Icons.add,
                 color: Color(0xFF9BB167),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddChatScreen(),
+                    ),
+                  );
+                },
               ),
               SizedBox(width: 12),
               _circleBtn(

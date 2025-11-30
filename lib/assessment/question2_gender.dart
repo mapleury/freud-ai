@@ -11,7 +11,7 @@ class _Question2GenderState extends State<Question2Gender> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F4F2),
+      backgroundColor: Color(0xFFF7F4F2),
 
       body: SafeArea(
         child: Padding(

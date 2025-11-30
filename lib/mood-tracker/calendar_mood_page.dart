@@ -1,4 +1,4 @@
-// lib/pages/mood/calendar_mood_page.dart
+
 import 'package:final_project/mood-tracker/mood_service.dart';
 import 'package:flutter/material.dart';
 import 'add_mood_page.dart';
@@ -13,12 +13,11 @@ class CalendarMoodPage extends StatefulWidget {
 
 class _CalendarMoodPageState extends State<CalendarMoodPage> {
   final MoodService _moodService = MoodService();
-  Map<String, String> _weekMoods = {}; // dateKey -> emoji
+  Map<String, String> _weekMoods = {}; 
   DateTime _monday = _computeMonday(DateTime.now());
   bool _loading = true;
 
   static DateTime _computeMonday(DateTime date) {
-    // Flutter DateTime.weekday: Mon=1 .. Sun=7
     final int delta = date.weekday - 1;
     return DateTime(
       date.year,
@@ -52,7 +51,6 @@ class _CalendarMoodPageState extends State<CalendarMoodPage> {
       MaterialPageRoute(builder: (_) => MoodFlowScreen(date: date)),
     );
 
-    // if result non-null, refresh
     if (result != null) {
       await _loadWeek();
     }
@@ -138,7 +136,6 @@ class _CalendarMoodPageState extends State<CalendarMoodPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                // Weekday short
                                 [
                                   'Mon',
                                   'Tue',

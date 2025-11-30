@@ -10,8 +10,6 @@ class EmotionAnalyzer {
   ];
 
   static String estimateManualEmotion() {
-    // this is random now, but you can replace it
-    // with whatever custom logic you want.
     _emotions.shuffle();
     return _emotions.first;
   }

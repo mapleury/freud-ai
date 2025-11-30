@@ -75,7 +75,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+             SizedBox(height: 20),
             Text(
               'Sign Up For Free',
               style: TextStyle(
@@ -84,14 +84,14 @@ class _SignUpScreensState extends State<SignUpScreen> {
                 color: AppColors.textColor,
               ),
             ),
-            const SizedBox(height: 30),
+             SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding:  EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Email Address'),
-                  const SizedBox(height: 6),
+                   Text('Email Address'),
+                   SizedBox(height: 6),
                   TextField(
                     controller: _emailController,
                     onChanged: (_) {
@@ -100,7 +100,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                       hintText: 'Enter your email...',
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding:  EdgeInsets.all(12),
                         child: Image.asset('assets/email-logo.png', width: 24),
                       ),
                       filled: true,
@@ -119,8 +119,8 @@ class _SignUpScreensState extends State<SignUpScreen> {
                   ),
                   if (!_isEmailValid)
                     Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      padding: const EdgeInsets.symmetric(
+                      margin:  EdgeInsets.only(top: 10),
+                      padding:  EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 12,
                       ),
@@ -134,7 +134,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                       child: Row(
                         children: [
                           Image.asset('assets/warning.png', width: 20),
-                          const SizedBox(width: 8),
+                           SizedBox(width: 8),
                           Text(
                             'Invalid Email Address!',
                             style: TextStyle(
@@ -145,10 +145,9 @@ class _SignUpScreensState extends State<SignUpScreen> {
                         ],
                       ),
                     ),
-                  const SizedBox(height: 20),
-                  // ---------------- PASSWORD ----------------
-                  const Text('Password'),
-                  const SizedBox(height: 6),
+                   SizedBox(height: 20),
+                   Text('Password'),
+                   SizedBox(height: 6),
                   TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
@@ -162,7 +161,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                       hintText: 'Enter your password...',
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding:  EdgeInsets.all(10),
                         child: Image.asset('assets/lock.png', width: 20),
                       ),
                       suffixIcon: GestureDetector(
@@ -172,7 +171,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                           });
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding:  EdgeInsets.all(12),
                           child: Image.asset('assets/eye.png', width: 22),
                         ),
                       ),
@@ -185,7 +184,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                   ),
                   if (!_isPasswordValid)
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding:  EdgeInsets.only(top: 10),
                       child: Text(
                         'Password must be at least 6 characters',
                         style: TextStyle(
@@ -194,10 +193,9 @@ class _SignUpScreensState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-                  const SizedBox(height: 20),
-                  // ---------------- CONFIRM PASSWORD ----------------
-                  const Text('Password Confirmation'),
-                  const SizedBox(height: 6),
+                   SizedBox(height: 20),
+                   Text('Password Confirmation'),
+                   SizedBox(height: 6),
                   TextField(
                     controller: _confirmPasswordController,
                     obscureText: _obscurePassword,
@@ -210,7 +208,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                       hintText: 'Confirm your password...',
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding:  EdgeInsets.all(12),
                         child: Image.asset('assets/lock.png', width: 20),
                       ),
                       suffixIcon: GestureDetector(
@@ -220,7 +218,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                           });
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding:  EdgeInsets.all(12),
                           child: Image.asset('assets/eye.png', width: 22),
                         ),
                       ),
@@ -233,7 +231,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                   ),
                   if (!_isConfirmPasswordValid)
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding:  EdgeInsets.only(top: 10),
                       child: Text(
                         'Passwords do not match',
                         style: TextStyle(
@@ -242,8 +240,8 @@ class _SignUpScreensState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-                  const SizedBox(height: 30),
-                  // ---------------- SIGN UP BUTTON ----------------
+                   SizedBox(height: 30),
+                  
                   SizedBox(
                     width: double.infinity,
                     height: 55,
@@ -275,18 +273,18 @@ class _SignUpScreensState extends State<SignUpScreen> {
                         ),
                       ),
                       child: _loading
-                          ? const CircularProgressIndicator(color: Colors.white)
+                          ?  CircularProgressIndicator(color: Colors.white)
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
+                                 Text(
                                   "Sign Up",
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
+                                 SizedBox(width: 8),
                                 Image.asset(
                                   'assets/arrow-right.png',
                                   width: 20,
@@ -296,12 +294,12 @@ class _SignUpScreensState extends State<SignUpScreen> {
                             ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  // ---------------- SIGN IN LINK ----------------
+                   SizedBox(height: 20),
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Already have an account? '),
+                       Text('Already have an account? '),
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context); 
@@ -316,7 +314,7 @@ class _SignUpScreensState extends State<SignUpScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                   SizedBox(height: 30),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:final_project/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/article/article_service.dart';
 
@@ -9,14 +10,14 @@ class ArticleDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F4F2),
+      backgroundColor:  Color(0xFFF7F4F2),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-              decoration: const BoxDecoration(
+              padding:  EdgeInsets.fromLTRB(20, 40, 20, 20),
+              decoration:  BoxDecoration(
                 color: Color(0xFF4F3422),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(35),
@@ -28,36 +29,41 @@ class ArticleDetailPage extends StatelessWidget {
                 children: [
                   // Back button
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => HomeScreen(),
+                      ),
+                    ),
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding:  EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 2),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child:  Icon(
                         Icons.arrow_back,
                         color: Colors.white,
                         size: 18,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20),
 
                   // Title
                   Text(
                     article.title,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: Colors.white,
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                   SizedBox(height: 12),
 
                   // Stats
                   Row(
-                    children: const [
+                    children:  [
                       Icon(Icons.star, color: Colors.white, size: 20),
                       SizedBox(width: 6),
                       Text("4.5", style: TextStyle(color: Colors.white)),
@@ -71,7 +77,7 @@ class ArticleDetailPage extends StatelessWidget {
                       Text("23", style: TextStyle(color: Colors.white)),
                     ],
                   ),
-                  const SizedBox(height: 18),
+                   SizedBox(height: 18),
 
                   // Profile + Follow
                   Row(
@@ -79,7 +85,7 @@ class ArticleDetailPage extends StatelessWidget {
                       Container(
                         width: 40,
                         height: 40,
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             image: AssetImage('assets/profile.png'),
@@ -87,14 +93,14 @@ class ArticleDetailPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      const Text(
+                       SizedBox(width: 10),
+                       Text(
                         "By Author",
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
-                      const Spacer(),
+                       Spacer(),
                       Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding:  EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 8,
                         ),
@@ -103,7 +109,7 @@ class ArticleDetailPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: Row(
-                          children: const [
+                          children:  [
                             Text(
                               "Follow",
                               style: TextStyle(
@@ -122,19 +128,19 @@ class ArticleDetailPage extends StatelessWidget {
               ),
             ),
 
-            // ================= CONTENT =================
+            // Content dari Article
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+              padding:  EdgeInsets.symmetric(horizontal: 20, vertical: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     article.content,
-                    style: const TextStyle(fontSize: 16, height: 1.5),
+                    style:  TextStyle(fontSize: 16, height: 1.5),
                   ),
-                  const SizedBox(height: 22),
+                   SizedBox(height: 22),
                   ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    borderRadius:  BorderRadius.all(Radius.circular(25)),
                     child: Image.network(
                       article.image,
                       height: 200,

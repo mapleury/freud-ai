@@ -1,3 +1,4 @@
+import 'package:final_project/chatbot/my_chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'message_model.dart';
 import 'message_bubble.dart';
@@ -26,9 +27,6 @@ class _ChatScreenState extends State<ChatScreen> {
     ),
   ];
 
-  // =======================================================
-  //                 CURHAT BOT RESPONSE LOGIC
-  // =======================================================
   Future<String> _getReply(String userText) async {
     final text = userText.toLowerCase();
 
@@ -39,7 +37,9 @@ class _ChatScreenState extends State<ChatScreen> {
       return "Sounds heavy. It's okay if you're not doing well today. You're trying your best just by being here.";
     }
 
-    if (text.contains("sad") || text.contains("sedih") || text.contains("down")) {
+    if (text.contains("sad") ||
+        text.contains("sedih") ||
+        text.contains("down")) {
       return "Feeling sad doesn't make you weak. It means you're alive and feeling. I'm right here.";
     }
 
@@ -176,20 +176,13 @@ class _ChatScreenState extends State<ChatScreen> {
     return "That doesn’t seem related to mental health. Try telling me how you feel.";
   }
 
-  // =======================================================
-  //                   SEND MESSAGE LOGIC
-  // =======================================================
   Future<void> _send() async {
     final text = _ctrl.text.trim();
     if (text.isEmpty || _isSending) return;
 
-    setState(() {
-      _isSending = true;
-    });
-
+    setState(() => _isSending = true);
     _ctrl.clear();
 
-    // Add user message
     final userMsg = MessageModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       text: text,
@@ -200,13 +193,9 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {});
     _scrollToBottom();
 
-    // Show typing indicator BEFORE reply
-    setState(() {
-      _isTyping = true;
-    });
+    setState(() => _isTyping = true);
 
-    // Wait for 1 second to make it feel real
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed( Duration(seconds: 1));
 
     final reply = await _getReply(text);
 
@@ -232,39 +221,78 @@ class _ChatScreenState extends State<ChatScreen> {
       if (_scroll.hasClients) {
         _scroll.animateTo(
           _scroll.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
+          duration:  Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
     });
   }
 
-  // =======================================================
-  //                         UI
-  // =======================================================
-  Widget _buildTypingIndicator() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  Widget _buildHeader() {
+    return Container(
+      padding:  EdgeInsets.fromLTRB(16, 14, 16, 20),
+      decoration:  BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(40)),
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 2)),
+        ],
+      ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.indigo.shade50,
-              borderRadius: BorderRadius.circular(12),
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                shape: BoxShape.circle,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>  MyChatsScreen(),
+                    ),
+                  );
+                },
+                child: Image.asset(
+                  'assets/brown-back-button.png',
+                  width: 40,
+                  height: 40,
+                ),
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Text("Typing..."),
-                SizedBox(width: 8),
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.indigo,
+          ),
+           SizedBox(width: 12),
+          Container(
+            width: 46,
+            height: 46,
+            decoration: BoxDecoration(
+              color: Colors.brown.shade200,
+              shape: BoxShape.circle,
+            ),
+            child:  Icon(Icons.person, color: Colors.white),
+          ),
+           SizedBox(width: 12),
+           Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Doctor Freud.AI",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black87,
                   ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "251 Chats Left  •  GPT-6",
+                  style: TextStyle(fontSize: 13, color: Colors.grey),
                 ),
               ],
             ),
@@ -274,52 +302,74 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildInput() {
-    return SafeArea(
+  Widget _buildTyping() {
+    if (!_isTyping) return SizedBox.shrink();
+
+    return Padding(
+      padding:  EdgeInsets.only(left: 20, bottom: 10, top: 4),
       child: Container(
-        padding: const EdgeInsets.only(bottom: 8, top: 4),
+        padding:  EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade200,
-              blurRadius: 4,
-              offset: Offset(0, -2),
-            ),
-          ],
+          color: Colors.orange.shade300,
+          borderRadius: BorderRadius.circular(20),
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: TextField(
-                  controller: _ctrl,
-                  onSubmitted: (_) => _send(),
-                  decoration: InputDecoration(
-                    hintText: 'Tell me anything...',
-                    filled: true,
-                    fillColor: Colors.grey.shade100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                  ),
+        child:  Text(
+          "Typing...",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputBar() {
+    return Container(
+      padding:  EdgeInsets.fromLTRB(16, 8, 16, 20),
+      decoration:  BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(0, -3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding:  EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                controller: _ctrl,
+                decoration:  InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Type to start chatting...",
                 ),
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.send,
-                  color: _isSending ? Colors.grey : Colors.indigo),
-              onPressed: _isSending ? null : _send,
+          ),
+           SizedBox(width: 10),
+          GestureDetector(
+            onTap: _send,
+            child: Container(
+              padding:  EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: Color(0xFF9BB167),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.send,
+                color: _isSending ? Colors.white54 : Colors.white,
+                size: 20,
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -327,33 +377,30 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Curhat Bot",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        backgroundColor: Colors.indigo,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.grey.shade50,
+      backgroundColor:  Color(0xFFEDE7DE),
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(),
+
+            Expanded(
               child: ListView.builder(
                 controller: _scroll,
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                itemCount: _messages.length + (_isTyping ? 1 : 0),
+                padding:  EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                itemCount: _messages.length,
                 itemBuilder: (context, index) {
-                  if (_isTyping && index == _messages.length) {
-                    return _buildTypingIndicator();
-                  }
                   return MessageBubble(msg: _messages[index]);
                 },
               ),
             ),
-          ),
-          _buildInput(),
-        ],
+
+            _buildTyping(),
+            _buildInputBar(),
+          ],
+        ),
       ),
     );
   }

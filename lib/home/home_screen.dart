@@ -15,6 +15,7 @@ import 'package:final_project/home/widgets/title_row.dart';
 import 'package:final_project/journal/journal_screen.dart';
 import 'package:final_project/mindful-hours/mindful_screen.dart';
 import 'package:final_project/mood-tracker/calendar_mood_page.dart';
+import 'package:final_project/mood-tracker/mood_tracker.dart';
 import 'package:final_project/stress/stress_level_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -62,22 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // Header with username greeting
               HeaderSection(username: username),
-              const SizedBox(height: 12),
-              // Sign out button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await AuthService().signOutAndGoToLogin(context);
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      '/login',
-                      (route) => false,
-                    );
-                  },
-                  child: const Text("Sign Out"),
-                ),
-              ),
+  
               const SizedBox(height: 20),
 
               // Mental Health Metrics
@@ -181,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => JournalScreen(),
+                          builder: (context) => JournalHomeScreen(),
                         ),
                       );
                     },
@@ -219,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CalendarMoodPage(),
+                          builder: (context) => MoodScreen(),
                         ),
                       );
                     },
@@ -247,7 +233,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 46),
               TitleRow(
                 title: 'Mindful Resources',
-                // Removed the trailing "See All" navigation completely
               ),
 
               HorizontalScrollableCards(

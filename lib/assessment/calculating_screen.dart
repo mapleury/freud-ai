@@ -71,10 +71,9 @@ class _CalculatingAssessmentScreenState
       }
     }
 
-    // Wait a moment for UX
-    await Future.delayed(const Duration(seconds: 2));
+    // pura pura loading
+    await Future.delayed( Duration(seconds: 2));
 
-    // Navigate to result screen
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
@@ -97,18 +96,18 @@ class _CalculatingAssessmentScreenState
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF4F3422),
-          image: const DecorationImage(
+          color:  Color(0xFF4F3422),
+          image:  DecorationImage(
             image: AssetImage('assets/Loading-Screen-Progress.gif'),
             fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+          padding:  EdgeInsets.symmetric(horizontal: 24, vertical: 18),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children:  [
                 Text(
                   'Compiling Data...',
                   style: TextStyle(

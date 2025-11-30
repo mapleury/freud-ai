@@ -7,12 +7,12 @@ class Question5Physical extends StatefulWidget {
 }
 
 class _Question5PhysicalState extends State<Question5Physical> {
-  bool? _physicalDistress; // null until chosen
+  bool? _physicalDistress; // null sebleum dipilih
 
   void _goNext() {
     if (_physicalDistress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please choose an option')),
+         SnackBar(content: Text('Please choose an option')),
       );
       return;
     }
@@ -37,10 +37,10 @@ class _Question5PhysicalState extends State<Question5Physical> {
     return GestureDetector(
       onTap: () => setState(() => _physicalDistress = value),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
+        duration:  Duration(milliseconds: 250),
         curve: Curves.easeOut,
-        margin: const EdgeInsets.only(bottom: 14),
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+        margin:  EdgeInsets.only(bottom: 14),
+        padding:  EdgeInsets.symmetric(vertical: 16, horizontal: 18),
         decoration: BoxDecoration(
           color: isSelected ? green : Colors.white,
           borderRadius: BorderRadius.circular(22),
@@ -53,7 +53,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
                     blurRadius: 8,
-                    offset: const Offset(0, 4),
+                    offset:  Offset(0, 4),
                   )
                 ]
               : [],
@@ -75,7 +75,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                 size: 22,
               ),
             ),
-            const SizedBox(width: 14),
+             SizedBox(width: 14),
             // TEXT LEFT
             Expanded(
               child: Column(
@@ -89,7 +89,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                       color: brown,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                   SizedBox(height: 6),
                   Text(
                     description,
                     style: TextStyle(
@@ -120,13 +120,13 @@ class _Question5PhysicalState extends State<Question5Physical> {
     const brown = Color(0xFF4B2E23);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F4F2),
+      backgroundColor:  Color(0xFFF7F4F2),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding:  EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              const SizedBox(height: 30),
+               SizedBox(height: 30),
 
               // HEADER ROW
               Row(
@@ -142,9 +142,9 @@ class _Question5PhysicalState extends State<Question5Physical> {
                   ),
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                         EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEDEAE6),
+                      color:  Color(0xFFEDEAE6),
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Text(
@@ -159,7 +159,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                 ],
               ),
 
-              const SizedBox(height: 40),
+               SizedBox(height: 40),
 
               // TITLE
               Align(
@@ -176,7 +176,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                 ),
               ),
 
-              const SizedBox(height: 32),
+               SizedBox(height: 32),
 
               // OPTIONS
               Expanded(
@@ -211,7 +211,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                       borderRadius: BorderRadius.circular(28),
                     ),
                   ),
-                  child: const Text(
+                  child:  Text(
                     "Continue  →",
                     style: TextStyle(
                       fontSize: 18,
@@ -221,7 +221,7 @@ class _Question5PhysicalState extends State<Question5Physical> {
                 ),
               ),
 
-              const SizedBox(height: 18),
+               SizedBox(height: 18),
             ],
           ),
         ),

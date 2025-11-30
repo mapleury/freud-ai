@@ -38,9 +38,9 @@ class _Question6MedicationState extends State<Question6Medication> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // pushes text to bottom
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,  
           children: [
-            // ICON AT TOP LEFT
+  
             Container(
               width: 38,
               height: 38,
@@ -51,7 +51,6 @@ class _Question6MedicationState extends State<Question6Medication> {
               child: Icon(icon, color: Color(0xFF4B2E23), size: 22),
             ),
 
-            // LABEL AT BOTTOM LEFT
             Text(
               label,
               style: TextStyle(

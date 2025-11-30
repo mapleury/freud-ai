@@ -13,7 +13,7 @@ class AssessmentResultScreen extends StatefulWidget {
   final double? moodValue;
   final double? stressLevelAnswer;
 
-  const AssessmentResultScreen({
+   AssessmentResultScreen({
     super.key,
     required this.physicalDistress,
     required this.stressLevel,
@@ -50,7 +50,7 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
     if (user == null) {
       setState(() => _error = 'You must be signed in to save results.');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sign in first to save assessment.')),
+         SnackBar(content: Text('Sign in first to save assessment.')),
       );
       return;
     }
@@ -77,7 +77,7 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
       await AssessmentService().saveAssessment(assessment);
       setState(() => _saved = true);
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Assessment saved.')));
+          .showSnackBar( SnackBar(content: Text('Assessment saved.')));
     } catch (e) {
       setState(() => _error = e.toString());
       ScaffoldMessenger.of(context)
@@ -111,11 +111,11 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
+            padding:  EdgeInsets.symmetric(horizontal: 28),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                 Text(
                   "Your Freud Score",
                   style: TextStyle(
                     color: Colors.white,
@@ -123,47 +123,46 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 30),
+                 SizedBox(height: 30),
                 CircleScore(score: _score, mainColor: scoreColor),
-                const SizedBox(height: 30),
+                 SizedBox(height: 30),
                 Text(
                   description,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     color: Colors.white,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     height: 1.3,
                   ),
                 ),
-                const SizedBox(height: 42),
+                 SizedBox(height: 42),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.lightbulb_outline,
+                     Icon(Icons.lightbulb_outline,
                         color: Colors.white, size: 18),
-                    const SizedBox(width: 6),
+                     SizedBox(width: 6),
                     Text(
                       "$suggestionsCount AI suggestions",
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      style:  TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    const SizedBox(width: 20),
+                     SizedBox(width: 20),
                     Icon(feelingIcon, color: Colors.white, size: 18),
-                    const SizedBox(width: 6),
+                     SizedBox(width: 6),
                     Text(
                       feelingText,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      style:  TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
                 ),
-                const SizedBox(height: 42),
+                 SizedBox(height: 42),
                 if (_error != null)
-                  Text(_error!, style: const TextStyle(color: Colors.red)),
+                  Text(_error!, style:  TextStyle(color: Colors.red)),
                 
-                // BIG BUTTON
                 SizedBox(
-                  width: double.infinity, // makes button full width
-                  height: 60, // fixed height
+                  width: double.infinity, 
+                  height: 60, 
                   child: OutlinedButton(
                     onPressed: _saving
                         ? null
@@ -176,14 +175,14 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
                               }
                             : _saveResult,
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.white, width: 2),
+                      side:  BorderSide(color: Colors.white, width: 2),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                       ),
                     ),
                     child: _saving
-                        ? const SizedBox(
+                        ?  SizedBox(
                             width: 24,
                             height: 24,
                             child: CircularProgressIndicator(
@@ -196,12 +195,12 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
                             children: [
                               Text(
                                 buttonText,
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(width: 6),
+                               SizedBox(width: 6),
                               Icon(buttonIcon, color: Colors.white),
                             ],
                           ),

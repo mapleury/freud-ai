@@ -27,7 +27,6 @@ class JournalService {
           )
           .toList();
 
-      // sort manual karena Firestore ngambek
       list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       return list;
@@ -35,7 +34,6 @@ class JournalService {
   }
 
   Future<void> updateEntry(JournalEntry entry) async {
-    // cek dulu apakah yang update adalah pemilik
     final doc = await _ref.doc(entry.id).get();
     if (doc['uid'] != _uid) return;
 

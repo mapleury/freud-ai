@@ -5,12 +5,12 @@ class AssessmentModel {
   final int score;
   final DateTime timestamp;
 
-  // Added from AssessmentAnswer
+  // dapet dari jawaban si user
   final String? goal;
   final String? gender;
   final int? age;
   final double? moodValue;
-  final double? stressLevelAnswer; // renamed to avoid conflict
+  final double? stressLevelAnswer;
 
   AssessmentModel({
     required this.uid,

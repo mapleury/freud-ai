@@ -31,13 +31,13 @@ class _ArticlesPageState extends State<ArticlesPage> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(
+      return  Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Well-being Articles")),
+      appBar: AppBar(title:  Text("Well-being Articles")),
       body: SizedBox(
         height: 260,
         child: PageView.builder(
@@ -57,7 +57,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                 );
               },
               child: Container(
-                margin: const EdgeInsets.all(12),
+                margin:  EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   image: DecorationImage(
@@ -77,11 +77,11 @@ class _ArticlesPageState extends State<ArticlesPage> {
                       end: Alignment.topCenter,
                     ),
                   ),
-                  padding: const EdgeInsets.all(16),
+                  padding:  EdgeInsets.all(16),
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     article.title,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

@@ -7,8 +7,10 @@ import 'package:final_project/assessment/question5_pain.dart';
 import 'package:final_project/assessment/question6_meds.dart';
 import 'package:final_project/assessment/question7_stress.dart';
 import 'package:final_project/home/home_screen.dart';
+import 'package:final_project/journal/create_journal_screen.dart';
 import 'package:final_project/mindful-hours/breath_screen.dart';
 import 'package:final_project/mindful-hours/mindful_screen.dart';
+import 'package:final_project/mood-tracker/calendar_mood_page.dart';
 import 'package:final_project/splash/loading_screen.dart';
 import 'package:final_project/splash/splash_screen.dart';
 import 'package:final_project/stress/stress_level_page.dart';
@@ -61,7 +63,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/articles': (context) => ArticlesPage(),
         '/mood': (context) => MoodHistoryPage(),
-        '/journal': (context) => JournalScreen(),
+        '/journal': (context) => JournalHomeScreen(),
+        '/create-journal': (context) => AddJournalScreen(),
         '/stress': (context) => StressLevelPage(),
         '/chatbot': (context) => ChatScreen(),
         '/q1': (context) => Question1Goal(),
@@ -73,6 +76,7 @@ class MyApp extends StatelessWidget {
         '/breath': (context) => BreatheScreen(),
         '/mindfulhour': (context) => MindfulHoursScreen(),
         '/q7': (context) => Question7Stress(physicalDistress: false),
+        '/cal-mood': (context) => CalendarMoodPage(),
       },
     );
   }

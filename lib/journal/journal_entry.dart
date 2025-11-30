@@ -31,7 +31,7 @@ class JournalEntry {
   factory JournalEntry.fromMap(String id, Map<String, dynamic> map) {
     return JournalEntry(
       id: id,
-      uid: map['uid'], // <----
+      uid: map['uid'],  
       title: map['title'],
       content: map['content'],
       emoji: map['emoji'],
